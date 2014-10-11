@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:outputStylesheet library="css" name="styles.css"/>
+        <title>#{msgs.indexWindowTitle}</title>
+    </h:head>
+    <h:body>
+        <h1>#{msgs.indexPageTitle}</h1>
+
+        <h:form>
+            <h:panelGrid columns="3">
+
+                #{msgs.userPrompt}
+                <h:inputText value="#{user.ID}" id="id" size="5" required="true" requiredMessage="#{msgs.IDRequired}">
+                    <f:validateLength minimum="5"/>
+                    <f:validateLength maximum="5"/>
+                </h:inputText>
+                <h:message for="id" styleClass="errorMessage"/>
+
+                #{msgs.destinationPrompt}
+                <h:selectOneRadio layout="lineDirection" id="destination" value="#{user.destination}" required="true" requiredMessage="#{msgs.destinationRequired}">
+                    <f:selectItem itemValue="S" itemLabel="San Diego"/>
+                    <f:selectItem itemValue="A" itemLabel="Alaska"/>
+                    <f:selectItem itemValue="F" itemLabel="Florida"/>
+                </h:selectOneRadio>
+                <h:message for="destination" styleClass="errorMessage"/>
+
+                #{msgs.bidPrompt}
+                <h:inputText value="#{user.bidAmount}" id="bid" required="true" requiredMessage="#{msgs.bidRequired}">
+                    <f:convertNumber minFractionDigits="2"/>
+                    
+                    <f:validateDoubleRange minimum="100"/>
+                </h:inputText>
+                <h:message for="bid" styleClass="errorMessage"/>
+
+                #{msgs.departureDatePrompt}
+                <p:calendar value="#{user.date}" id="date" mindate="8/3/12" maxdate="8/21/12" mode="inline" required="true" requiredMessage="#{msgs.departureDateRequired}"/>
+                <h:message for="date" styleClass="errorMessage"/>
+            </h:panelGrid>
+
+            <h:commandButton value="#{msgs.submitPrompt}"  action="#{user.addToDB()}"/>
+            <br></br>
+            <p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
+                <h:outputText value="San Diego" style="color:#666666;font-size:36px;" />
+                <p:graphicImage value="/resources/images/sandiego.gif" />
+                <h:outputText value="Alaska" style="color:#666666;font-size:36px;" />
+                <p:graphicImage value="/resources/images/alaska.gif" />
+                <h:outputText value="Florida" style="color:#666666;font-size:36px;" />
+                <p:graphicImage value="/resources/images/florida.gif" />
+            </p:notificationBar>  
+
+            <p:commandButton value="#{msgs.showPictures}" onclick="bar.show()" type="button" />  
+            <p:commandButton value="#{msgs.hidePictures}" onclick="bar.hide()" type="button" />
+            <br></br>
+            <p:commandLink value="#{msgs.results}" action="results"/>
+
+            <br></br>
+            <h3>#{msgs.localeChoice}</h3>
+            <h:commandLink id="english" action="chooseLocale"
+                           actionListener="#{welcomeBean.onChooseLocale}">
+                <h:outputText value="#{msgs.english}" />
+            </h:commandLink>
+            <h:outputText value=" "/>
+            <h:commandLink id="spanish" action="chooseLocale"
+                           actionListener="#{welcomeBean.onChooseLocale}">
+                <h:outputText value="#{msgs.spanish}" />
+            </h:commandLink>
+        </h:form>
+    </h:body>
+</html>

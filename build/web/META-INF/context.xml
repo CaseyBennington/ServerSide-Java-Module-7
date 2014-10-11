@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/cbenningtonmod7Vacation">
+<Resource name="jdbc/vacation" auth="Container"
+              maxActive="100" maxIdle="30" maxWait="10000"
+              username="itp246" password="itp246"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/vacation?autoReconnect=true"
+              logAbandoned="true" removeAbandoned="true"
+              removeAbandonedTimeout="60" type="javax.sql.DataSource" />
+</Context>
